@@ -17,18 +17,20 @@
 # with this program; if not, write to the Free Software Foundation Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-'''
+"""
 First assignment CMEPDA
-'''
+"""
+
 import argparse
+import time
 from typing import List, Dict
 from matplotlib import pyplot as plt
 
+NUM_LETT = 26
+CHAR_A = 97  # ASCII lowecase a
 
-NUM_LETT=26
-CHAR_A=97 #ASCII lowecase a
 
-def read_file(file_path:str)-> List[str]:
+def read_file(file_path: str) -> str:
     '''
     Opens and reads the file, returns a lower case string
     '''
@@ -37,29 +39,30 @@ def read_file(file_path:str)-> List[str]:
         text = input_file.read().lower()
     return text
 
-def count(text:str, lett:str)-> int:
-    '''
-    Counts how many times a letter appears
+
+def count(text: str, lett: str) -> int:
+    ''' Counts how many times a letter appears
     '''
     return text.count(lett)
 
-def create_set(text:str)-> Dict[str, int]:
+
+def create_set(text: str) -> Dict[str, int]:
     '''
     Creates a dictionary with the letters as keys and their frequency as values
     '''
-    set={}
-    for i in range(CHAR_A, CHAR_A+NUM_LETT):
-        set[chr(i)]=count(text, chr(i))
+    set = {}
+    for i in range(CHAR_A, CHAR_A + NUM_LETT):
+        set[chr(i)] = count(text, chr(i))
     return set
 
-def graph(set:Dict[str, int]):
+
+def graph(set: Dict[str, int]):
     '''
     Histogram
     '''
-    print(set)
     plt.bar(list(set.keys()), set.values(), color='g')
+    print(f'Time needed:{time.time() - t0} seconds')
     plt.show()
-
 
 
 if __name__ == '__main__':
@@ -69,6 +72,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
     text = read_file(args.infile)
     if bool(args.verbose):
+        t0=time.time()
         graph(create_set(text))
-
-
