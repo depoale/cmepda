@@ -61,16 +61,19 @@ def graph(set: Dict[str, int]):
     Histogram
     '''
     plt.bar(list(set.keys()), set.values(), color='g')
-    print(f'Time needed:{time.time() - t0} seconds')
+    plt.ylabel('Counts')
     plt.show()
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Print some book statistics')
+   # parser.add_argument('infile', type=str, help='path to the input file')
     parser.add_argument('--infile', type=str, help='path to the input file', default="siddhartha.txt")
-    parser.add_argument("--verbose", type=int, choices=[0, 1], default=1)
     args = parser.parse_args()
     text = read_file(args.infile)
-    if bool(args.verbose):
-        t0=time.time()
-        graph(create_set(text))
+    t0 = time.time()
+    set_=create_set(text)
+    print(f'Elapsed time:{time.time() - t0} seconds')
+    print_answer = input("\nShow answer? [y/n]: ")
+    if print_answer.lower() == "y":
+        graph(set_)
